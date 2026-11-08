@@ -7,102 +7,191 @@
     <!-- Adsgram SDK Integration Script -->
     <script src="https://sad.adsgram.ai/js/adsgram.min.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #0f172a;
             color: #ffffff;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+        }
+        .header {
+            width: 100%;
+            max-width: 420px;
             text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #1e293b;
         }
-        .container {
-            padding: 20px;
-            max-width: 400px;
-            width: 90%;
-            background: #1e293b;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        .header h1 {
+            font-size: 20px;
+            color: #f8fafc;
+            font-weight: 700;
         }
-        h1 {
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 14px;
+        .header p {
+            font-size: 12px;
             color: #94a3b8;
-            margin-bottom: 20px;
+            margin-top: 4px;
         }
-        button {
-            background-color: #3b82f6;
+        .feed-container {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .video-card {
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .thumbnail-box {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .thumbnail-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .lock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #facc15;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .card-content {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .video-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f1f5f9;
+            line-height: 1.4;
+        }
+        .watch-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 8px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
             cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: background 0.2s;
+            text-align: center;
+            transition: opacity 0.2s;
         }
-        button:hover {
-            background-color: #2563eb;
+        .watch-btn:active {
+            opacity: 0.8;
         }
-        #result {
-            margin-top: 15px;
-            font-size: 14px;
+        .watch-btn.unlocked {
+            background: #22c55e;
+            cursor: default;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Viral Expose</h1>
-        <p>সম্পূর্ণ ভিডিওটি দেখে রিওয়ার্ড আনলক করুন!</p>
-        <button id="watchAdBtn">Watch Ad & Unlock</button>
-        <div id="result"></div>
+    <div class="header">
+        <h1>🔥 Viral Expose</h1>
+        <p>সম্পূর্ণ ভিডিও দেখতে অ্যাড দেখে আনলক করুন</p>
+    </div>
+
+    <div class="feed-container">
+        <!-- ভিডিও কার্ড ১ -->
+        <div class="video-card">
+            <div class="thumbnail-box">
+                <!-- এখানে থাম্বনেইল ছবির লিংক দিতে পারেন -->
+                <div style="color: #64748b; font-size: 13px;">Video Preview #1</div>
+                <div class="lock-badge">🔒 Locked</div>
+            </div>
+            <div class="card-content">
+                <div class="video-title">Viral Leaked Video Episode 1 (Full HD)</div>
+                <button class="watch-btn" onclick="triggerAdAndUnlock(this, 'https://t.me/FreeEarningZoneBD_bot')">Watch Video & Unlock</button>
+            </div>
+        </div>
+
+        <!-- ভিডিও কার্ড ২ -->
+        <div class="video-card">
+            <div class="thumbnail-box">
+                <div style="color: #64748b; font-size: 13px;">Video Preview #2</div>
+                <div class="lock-badge">🔒 Locked</div>
+            </div>
+            <div class="card-content">
+                <div class="video-title">Exclusive MMS Exposed Content #2</div>
+                <button class="watch-btn" onclick="triggerAdAndUnlock(this, 'https://t.me/FreeEarningZoneBD_bot')">Watch Video & Unlock</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // আপনার Adsgram ড্যাশবোর্ড থেকে তৈরি করা নতুন Block ID টি এখানে বসাবেন
+        // আপনার Adsgram ড্যাশবোর্ড থেকে পাওয়া Block ID এখানে বসাবেন
         const blockId = "YOUR_ADSGRAM_BLOCK_ID"; 
-
         const adController = window.Adsgram ? window.Adsgram.init({ blockId: blockId }) : null;
 
-        document.getElementById("watchAdBtn").addEventListener("click", async () => {
-            const resultDiv = document.getElementById("result");
-            resultDiv.textContent = "Loading ad...";
+        async function triggerAdAndUnlock(buttonElement, targetLink) {
+            if (buttonElement.classList.contains("unlocked")) {
+                window.location.href = targetLink;
+                return;
+            }
 
             if (!adController) {
-                resultDiv.textContent = "Adsgram SDK loaded fail or not supported here.";
+                alert("Adsgram SDK is not loaded properly.");
                 return;
             }
 
             try {
-                // অ্যাড শো করার জন্য রিকোয়েস্ট পাঠানো হচ্ছে
+                // অ্যাড পপ-আপ রিকোয়েস্ট
                 const response = await adController.show();
                 
-                // ইউজার সম্পূর্ণ অ্যাড দেখলে নিচের কোড রান হবে
-                resultDiv.style.color = "#22c55e";
-                resultDiv.textContent = "Success! Content unlocked.";
+                // অ্যাড সফলভাবে দেখা শেষ হলে
+                buttonElement.textContent = "Unlocked ✓ (Open)";
+                buttonElement.classList.add("unlocked");
                 
-                // এখানে আপনার কাঙ্ক্ষিত টেলিগ্রাম চ্যানেল বা প্রমোশনাল লিংক রিডাইরেক্ট করাতে পারেন
+                // কার্ডের লক ব্যাজ পরিবর্তন করা
+                const card = buttonElement.closest(".video-card");
+                const badge = card.querySelector(".lock-badge");
+                badge.textContent = "🔓 Unlocked";
+                badge.style.color = "#22c55e";
+
+                // সামান্য সময় পর টেলিগ্রাম বট বা ভিডিও লিংকে রিডাইরেক্ট করা
                 setTimeout(() => {
-                    window.location.href = "https://t.me/FreeEarningZoneBD_bot";
-                }, 1500);
+                    window.location.href = targetLink;
+                }, 1000);
 
             } catch (err) {
-                // ইউজার অ্যাড স্কিপ করলে বা কোনো এরর হলে
-                resultDiv.style.color = "#ef4444";
-                resultDiv.textContent = "Ad was skipped or failed to load.";
+                // ইউজার অ্যাড স্কিপ করলে বা ফেল করলে
+                alert("Please watch the full ad to unlock the video.");
                 console.error(err);
             }
-        });
+        }
     </script>
 
 </body>
 </html>
-
