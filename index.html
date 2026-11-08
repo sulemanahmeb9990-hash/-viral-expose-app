@@ -1,1 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Expose</title>
+    <!-- Adsgram SDK Integration Script -->
+    <script src="https://sad.adsgram.ai/js/adsgram.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+            background: #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #2563eb;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Viral Expose</h1>
+        <p>সম্পূর্ণ ভিডিওটি দেখে রিওয়ার্ড আনলক করুন!</p>
+        <button id="watchAdBtn">Watch Ad & Unlock</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // আপনার Adsgram ড্যাশবোর্ড থেকে তৈরি করা নতুন Block ID টি এখানে বসাবেন
+        const blockId = "YOUR_ADSGRAM_BLOCK_ID"; 
+
+        const adController = window.Adsgram ? window.Adsgram.init({ blockId: blockId }) : null;
+
+        document.getElementById("watchAdBtn").addEventListener("click", async () => {
+            const resultDiv = document.getElementById("result");
+            resultDiv.textContent = "Loading ad...";
+
+            if (!adController) {
+                resultDiv.textContent = "Adsgram SDK loaded fail or not supported here.";
+                return;
+            }
+
+            try {
+                // অ্যাড শো করার জন্য রিকোয়েস্ট পাঠানো হচ্ছে
+                const response = await adController.show();
+                
+                // ইউজার সম্পূর্ণ অ্যাড দেখলে নিচের কোড রান হবে
+                resultDiv.style.color = "#22c55e";
+                resultDiv.textContent = "Success! Content unlocked.";
+                
+                // এখানে আপনার কাঙ্ক্ষিত টেলিগ্রাম চ্যানেল বা প্রমোশনাল লিংক রিডাইরেক্ট করাতে পারেন
+                setTimeout(() => {
+                    window.location.href = "https://t.me/FreeEarningZoneBD_bot";
+                }, 1500);
+
+            } catch (err) {
+                // ইউজার অ্যাড স্কিপ করলে বা কোনো এরর হলে
+                resultDiv.style.color = "#ef4444";
+                resultDiv.textContent = "Ad was skipped or failed to load.";
+                console.error(err);
+            }
+        });
+    </script>
+
+</body>
+</html>
 
